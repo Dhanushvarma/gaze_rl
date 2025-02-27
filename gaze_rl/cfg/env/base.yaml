@@ -1,0 +1,24 @@
+num_envs: 1
+name: null
+
+hp_name: ${env.name}
+
+obs_dim: null
+subgoal_dim: null
+action_dim: null
+
+obs_keys: null
+subgoal_keys: null
+
+gaze_dim: null
+num_goals: null
+max_timesteps: null
+
+cam_height: null
+cam_width: null
+
+arm_action_mode: null
+
+n_frame_stack: 1
+
+image_obs: False

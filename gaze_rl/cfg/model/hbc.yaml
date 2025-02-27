@@ -1,0 +1,52 @@
+train_hl_and_ll_together: False
+bce_gripper_open_weight: 0.25
+gripper_loss_weight: 0.1
+
+hl_policy: 
+  prior_dist: gaussian 
+
+  kl_weight: 1.0 
+  bce_gripper_open_weight: ${..bce_gripper_open_weight}
+  gripper_loss_weight: ${..gripper_loss_weight}
+
+
+  input_dim: ${env.subgoal_dim} # input to encoder
+  subgoal_dim: ${env.subgoal_dim} # input to encoder (concatenated with env.obs_dim)
+  cond_dim: ${env.obs_dim}
+
+  embed_dim: 128
+  latent_dim: 64
+  target_subgoal_dim: ${env.subgoal_dim} 
+  multi_head: True 
+
+  net: 
+    hidden_dims: [128, 128, 128, 128, 128]
+
+
+ll_policy:
+  input_dim: ${env.obs_dim}
+  action_dim: ${env.action_dim}
+  subgoal_dim: ${env.subgoal_dim}
+
+  input_embed_dim: 128
+  subgoal_embed_dim: 128
+
+  # RNN 
+  rnn_is_open_loop: False
+  rnn_type: LSTM
+  rnn_hidden_dim: 512
+  rnn_num_layers: 2
+  bidirectional: False 
+
+  input_task: False
+  num_tasks: ${env.num_tasks}
+  task_embedding_dim: 128
+
+  output_mlp: 
+    hidden_dims: [512, 512]
+
+  bce_gripper_open_weight: ${..bce_gripper_open_weight}
+  gripper_loss_weight: ${..gripper_loss_weight}
+
+defaults:
+  - base

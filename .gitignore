@@ -1,0 +1,13 @@
+.idea/
+*__pycache__*
+data/*
+outputs/*
+results/*
+wandb/*
+*.egg-info
+.ruff_cache/*
+gaze_rl/data/*
+gaze_rl/results/*
+gaze_rl/wandb/*
+*.png
+gaze_rl/rollout/outputs/*

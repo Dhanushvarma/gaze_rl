@@ -1,0 +1,25 @@
+hp_name: d-${data.dataset_name}_ne-${data.num_examples}_t-${data.num_trajs}
+
+# where is the dataset stored
+data_dir: "/home/dhanush/gaze_project/gaze_rl/data"
+
+batch_size: 128
+dataset_name: ""
+
+# number of trajectories to use for training
+num_trajs: -1
+
+# number of training examples, -1 means use all
+num_examples: -1
+
+# percent of trajectories to use for training
+train_frac: 0.9
+
+image_obs: ${env.image_obs}
+data_type: n_step # n_step, transitions
+
+seq_len: 20
+
+# gaze_noise: ${env.gaze_noise}
+gaze_json_file: null # path to gaze json file
+gaze_mlp_ckpt_file: null # path to gaze mlp ckpt file

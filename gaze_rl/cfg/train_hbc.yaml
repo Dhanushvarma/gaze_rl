@@ -1,0 +1,21 @@
+num_updates: 100_000
+log_terminal_every: 10_000 
+run_eval_rollouts: True
+log_rollout_videos: True
+num_eval_rollouts: 1
+
+name: hbc 
+
+rollout:
+  hl_horizon: ${data.seq_len}
+  subgoal_var_key: gripper_xyz
+  subgoal_var_threshold: 0.1
+  num_subgoals_sample: 100
+  subgoal_selection: random
+
+hp_name: ${name}_nt-${data.num_trajs}_hl-${rollout.hl_horizon}_ns-${rollout.num_subgoals_sample}_ss-${rollout.subgoal_selection}
+
+defaults: 
+  - base
+  - model: hbc
+  - _self_

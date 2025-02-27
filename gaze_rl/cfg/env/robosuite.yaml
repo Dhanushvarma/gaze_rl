@@ -1,0 +1,34 @@
+name: robosuite
+env_id: robosuite
+hp_name: ${env.name}_m-${env.arm_action_mode}
+task_name: ${env.task}
+
+obs_dim: 39
+subgoal_dim: 5
+action_dim: 7 # x, y, z, qx, qy, qz, qw, gripper
+num_tasks: 2
+max_episode_steps: 200
+
+# cam_height: 360
+# cam_width: 640
+
+cameras: [agentview, robot0_eye_in_hand]
+camera_resolution: [128, 128]
+
+action_mode: eep 
+
+arm_action_mode: joint_position # delta action
+gripper_action_mode: discrete  # FIXME
+absolute_mode: True
+
+obs_keys: ['robot0_eef_pos', 'robot0_eef_quat', 'robot0_gripper_qpos', 'robot0_joint_pos', 'object']
+subgoal_keys: ['robot0_eef_pos', robot0_gripper_qpos]
+image_keys: ["robot0_eye_in_hand_image"]
+
+
+tasks: ["pick_up_red_block", "pick_up_green_block"]
+task: LiftDual
+
+defaults: 
+    - base
+    - _self_
