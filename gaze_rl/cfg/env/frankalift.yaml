@@ -1,0 +1,7 @@
+env_id: FrankaLiftEnv-v0
+
+hp_name: ${env.name}_env-${env.env_id}
+
+defaults:
+  - base
+  - _self_

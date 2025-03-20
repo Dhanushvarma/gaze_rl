@@ -1,0 +1,29 @@
+name: mujoco
+env_id: null
+
+hp_name: ${env.name}_env-${env.env_id}
+
+# Observation dimensions
+obs_dim: 21 # Size of your vector observations
+subgoal_dim: 7 # Position (3) + orientation (3) + gripper (1)
+action_dim: 7 # 6-DOF arm + 1 binary gripper
+
+# Task settings
+max_episode_steps: 200
+
+# Image settings
+image_obs: True
+camera_resolution: [224, 224]
+n_frame_stack: 4
+
+# Action settings
+arm_action_mode: delta # delta or absolute
+gripper_action_mode: discrete
+
+# Observation keys mapping
+obs_keys: ["vector", "images"]
+subgoal_keys: ["position", "gripper"]
+
+defaults:
+  - base
+  - _self_
