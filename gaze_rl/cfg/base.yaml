@@ -83,7 +83,7 @@ hydra:
     subdir: ${hp_name}
 
 defaults:
-  - env: robosuite
+  - env: mujoco
   - data: base
   - custom
   - override hydra/job_logging: disabled
