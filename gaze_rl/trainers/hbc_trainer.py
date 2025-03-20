@@ -10,7 +10,7 @@ from gaze_rl.models.hbc import HierarchicalBC
 from gaze_rl.trainers.offline_trainer import OfflineTrainer
 from gaze_rl.utils.logger import log
 
-# FIXME
+# TODO: make this for MuJoCo envs
 def compute_joint_gripper_loss(pred, target, pos_weight=1.0, env_name="rlbench"):
     if env_name == "rlbench":
         act_loss = F.mse_loss(pred[:, :-1], target[:, :-1])
@@ -43,7 +43,7 @@ class HBCTrainer(OfflineTrainer):
         kl_loss = kl.mean()
         kl_loss *= self.cfg.model.hl_policy.kl_weight
 
-        # FIXME
+        # TODO : make this for MuJoCo envs
         if self.cfg.env.name == "rlbench" or self.cfg.env.name == "robosuite":
             subgoal_recon[:, -1] = torch.sigmoid(subgoal_recon[:, -1])
             act_loss_hl, gripper_loss_hl = compute_joint_gripper_loss(

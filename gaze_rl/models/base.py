@@ -30,6 +30,7 @@ class BaseModel(nn.Module):
         ckpt = torch.load(open(ckpt_path, "rb"))
 
         params = ckpt[key]
+        # TODO
         # turns out this happens when you use a torch.compile model
         # fix the keys of the state dictionary :(
         # honestly no idea how checkpoints sometimes get this prefix, have to debug more

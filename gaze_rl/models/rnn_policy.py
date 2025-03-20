@@ -15,6 +15,7 @@ class RNNPolicy(BaseModel):
     def __init__(self, cfg: DictConfig):
         super().__init__(cfg=cfg)
 
+        # TODO
         # if gaze_concat and cfg.multi_head:
         #     cfg.input_dim += env_gaze_dim
 
@@ -23,7 +24,7 @@ class RNNPolicy(BaseModel):
         # Batch normalization for input embedding
         self.input_bn = nn.BatchNorm1d(cfg.input_embed_dim)
 
-        self.activation = nn.LeakyReLU(0.2)
+        self.activation = nn.LeakyReLU(0.2)  # TODO: tune this value (or) make param
 
         if self.cfg.subgoal_dim:
             self.subgoal_embed = nn.Linear(cfg.subgoal_dim, cfg.subgoal_embed_dim)
@@ -36,6 +37,7 @@ class RNNPolicy(BaseModel):
         if cfg.subgoal_dim:
             rnn_input_dim += cfg.subgoal_embed_dim
 
+        # TODO
         # if gaze_concat and not cfg.multi_head:
         #     rnn_input_dim += env_gaze_dim
 

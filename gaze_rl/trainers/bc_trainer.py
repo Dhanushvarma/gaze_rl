@@ -23,6 +23,7 @@ class BCTrainer(OfflineTrainer):
                 feature_extractor.eval()
                 feature_extractor.to(self.device)
             else:
+                # TODO
                 import ipdb
 
                 ipdb.set_trace()

@@ -27,6 +27,7 @@ class HierarchicalBC(BaseModel):
     def _sample_subgoals(self, cond: torch.Tensor, N: int = 100):
         """
         Sample N subgoals from the decoder
+        # TODO(dhanush): verify if logic correct, seems fishy.
         """
         # sample from prior first
         latent_sample = torch.randn(N, self.cfg.hl_policy.latent_dim).to(cond.device)
@@ -51,6 +52,7 @@ class HierarchicalBC(BaseModel):
         if subgoal_selection == "random":
             selected_subgoal = all_sampled_subgoals[0]
         elif subgoal_selection == "euclidean":
+            # TODO: revisit, assume L2 norm is correct for subgoals
             distances = torch.linalg.norm(all_sampled_subgoals[:, :3] - goal, dim=1)
             selected_indx = torch.argmin(distances)
             selected_subgoal = all_sampled_subgoals[selected_indx]

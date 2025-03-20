@@ -27,7 +27,7 @@ class MLPPolicy(BaseModel):
 
             # get the feature dimension
             with torch.no_grad():
-                dummy_input = torch.zeros((1, 3, 224, 224)).cuda()
+                dummy_input = torch.zeros((1, 3, 224, 224)).cuda()  # TODO: fix this hack
                 embedding_dim = feature_extractor(dummy_input).shape[-1]
         else:
             # encode the input

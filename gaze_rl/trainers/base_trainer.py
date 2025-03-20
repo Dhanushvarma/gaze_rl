@@ -7,7 +7,7 @@ import tensorflow as tf
 import torch
 from hydra.core.hydra_config import HydraConfig
 from omegaconf import DictConfig, OmegaConf
-from torch.cuda.amp import GradScaler, autocast
+from torch.cuda.amp import autocast
 
 import gaze_rl.utils.general_utils as gutl
 import wandb
@@ -111,8 +111,9 @@ class BaseTrainer:
         observations = batch["observations"]
 
         if cfg.env.image_obs:
-            # for RLBench images is a dictionary
-            # TODO: make modifications for Robosuite
+            # NOTE(deprecated): for RLBench images is a dictionary
+            # TODO(deprecated): make modifications for Robosuite
+            # TODO: now finally need to fix for MuJoCo Env
             if isinstance(observations, dict):
                 self.obs_shape = observations[cfg.env.image_keys[0]].shape[1:]
             else:
@@ -144,13 +145,13 @@ class BaseTrainer:
         # initialize model
         self.model = self.setup_model()
         self.model = self.model.to(self.device)
-        # self.model = torch.compile(self.model)
+        # self.model = torch.compile(self.model)  # TODO : ??
 
         # initialize optimizer
         self.optimizer, self.scheduler = self.setup_optimizer_and_scheduler()
 
         # for mixed precision training
-        self.scaler = GradScaler()
+        self.scaler = torch.amp.GradScaler()
 
         # count number of parameters
         num_params = sum(p.numel() for p in self.model.parameters())

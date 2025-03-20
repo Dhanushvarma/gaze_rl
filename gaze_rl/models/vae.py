@@ -11,6 +11,7 @@ class Encoder(nn.Module):
         super().__init__()
         input_dim = cfg.input_dim
 
+        # TODO
         # if cfg.concat_input_with_gaze and not cfg.multi_head:
         #     # for gaze concatenated approach, changes depending on 2D or 3D gaze
         #     input_dim += cfg.gaze_dim
@@ -45,6 +46,7 @@ class Decoder(nn.Module):
         self.input_embed = nn.Linear(cfg.latent_dim, cfg.embed_dim)
         self.cond_embed = nn.Linear(cfg.cond_dim, cfg.embed_dim)
 
+        # TODO
         # if cfg.concat_input_with_gaze and not cfg.multi_head:
         #     # for gaze concatenated approach, changes depending on 2D or 3D gaze
         #     input_dim += cfg.gaze_dim
@@ -56,7 +58,7 @@ class Decoder(nn.Module):
         if self.cfg.multi_head:
             self.fc_output_joint = nn.Linear(
                 encoder_output_dim, cfg.subgoal_dim - 1
-            )  # for gripper open in RLbench
+            )  # for gripper open in RLbench  # TODO
             self.fc_output_gripper = nn.Linear(encoder_output_dim, 1)
         else:
             self.fc_output = nn.Linear(encoder_output_dim, cfg.subgoal_dim)
@@ -70,7 +72,7 @@ class Decoder(nn.Module):
 
         if self.cfg.multi_head:
             # TODO: generalize this for any multi head output, this is only for RLBench with gripper at the end
-            joint_output = self.fc_output_joint(h)
+            joint_output = self.fc_output_joint(h)  # TODO: does not have to be joint pos :D
             gripper_output = self.fc_output_gripper(h)
             x_recon = torch.cat([joint_output, gripper_output], dim=-1)
         else:
@@ -82,6 +84,7 @@ class Decoder(nn.Module):
 class VAE(BaseModel):
     def __init__(self, cfg: DictConfig):
         super().__init__(cfg)
+        # TODO
         # if gaze_concat:
         #     cfg.cond_dim += env_gaze_dim
         self.encoder = Encoder(cfg)
