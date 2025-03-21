@@ -55,10 +55,10 @@ class Decoder(nn.Module):
             cfg.net, input_dim=cfg.embed_dim * 2
         )
 
+        # NOTE: seperate head for gripper since its binary
+        # NOTE: fc_output_movement can be {joint_pos, delta xyz, ...}
         if self.cfg.multi_head:
-            self.fc_output_joint = nn.Linear(
-                encoder_output_dim, cfg.subgoal_dim - 1
-            )  # for gripper open in RLbench  # TODO
+            self.fc_output_movement = nn.Linear(encoder_output_dim, cfg.subgoal_dim - 1)
             self.fc_output_gripper = nn.Linear(encoder_output_dim, 1)
         else:
             self.fc_output = nn.Linear(encoder_output_dim, cfg.subgoal_dim)
@@ -71,10 +71,9 @@ class Decoder(nn.Module):
         h = self.encoder(h)
 
         if self.cfg.multi_head:
-            # TODO: generalize this for any multi head output, this is only for RLBench with gripper at the end
-            joint_output = self.fc_output_joint(h)  # TODO: does not have to be joint pos :D
+            movement_output = self.fc_output_movement(h)
             gripper_output = self.fc_output_gripper(h)
-            x_recon = torch.cat([joint_output, gripper_output], dim=-1)
+            x_recon = torch.cat([movement_output, gripper_output], dim=-1)
         else:
             x_recon = self.fc_output(h)
 
