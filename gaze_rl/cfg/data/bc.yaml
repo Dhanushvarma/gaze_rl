@@ -1,0 +1,33 @@
+# Configuration for vanilla Behavior Cloning
+# @package _global_
+
+defaults:
+  - base
+  - _self_
+
+# Data processing settings
+hierarchical: false  # Not using hierarchical structure
+policy_type: ${policy}  # mlp or rnn, override from command line
+
+# Whether to generate additional datasets
+generate_vae_data: false
+generate_policy_data: true
+policy_data_path: "${output_dir}/policy_data.pkl"
+
+# Policy type specific data settings
+mlp:
+  sequence_length: 1
+  include_action_history: false
+
+rnn:
+  sequence_length: 10  # Number of timesteps in each sequence
+  stride: 1  # Stride between sequences
+  include_action_history: true  # Whether to include past actions in input
+
+# Default policy type
+policy: "mlp"
+
+# Hydra settings
+hydra:
+  run:
+    dir: logs/bc_${policy}/${now:%Y-%m-%d_%H-%M-%S}
